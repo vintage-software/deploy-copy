@@ -1,0 +1,29 @@
+{
+  "exclude": [
+    "./**/.hg/**/*.*",
+    "./**/.git/**/*.*",
+    "./**/.hgignore",
+    "./**/.vs/**/*.*",
+    "./**/.nuget/**/*.*",
+    "./**/obj/**",
+    "./**/bin/**/*.pdb",
+    "./**/bin/Debug/**",
+    "./**/node_modules/**",
+    "./**/*.cs",
+    "./**/*.ts",
+    "./**/*.scss",
+    "./**/*.resx",
+    "./**/*.sln",
+    "./**/*.sln.orig",
+    "./**/*.csproj",
+    "./**/*.csproj.user",
+    "./**/app.config",
+    "./**/App.config",
+    "./**/arbor.json",
+    "./**/CustomDictionary.xml",
+    "./**/deploy.json",
+    "./**/npm-shrinkwrap.json",
+    "./**/package.json",
+    "./**/packages.config"
+  ]
+}

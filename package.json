@@ -1,0 +1,41 @@
+{
+  "name": "deploy-copy",
+  "version": "0.0.0",
+  "description": "Config-based script to copy only files needed for production.",
+  "main": "dist/index.js",
+  "bin": {
+    "deploy-copy": "dist/index.js"
+  },
+  "scripts": {
+    "lint": "tslint \"src/**/*.ts\"",
+    "clean": "rimraf dist",
+    "build": "tsc --project tsconfig.json",
+    "ide-build": "yarn run lint && yarn run build && echo successfully built"
+  },
+  "dependencies": {
+    "del": "2.2.2",
+    "fs-extra": "2.0.0",
+    "globby": "6.1.0",
+    "progress": "1.1.8",
+    "promisify-node": "0.4.0",
+    "rimraf": "2.5.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "0.0.37",
+    "@types/node": "7.0.0",
+    "@types/progress": "1.1.28",
+    "@types/rimraf": "0.0.28",
+    "tslint": "4.3.1",
+    "typescript": "2.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vintage-software/deploy-copy.git"
+  },
+  "author": "Kevin Phelps <kphelps@vintagesoftware.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vintage-software/deploy-copy/issues"
+  },
+  "homepage": "https://github.com/vintage-software/deploy-copy#readme"
+}
