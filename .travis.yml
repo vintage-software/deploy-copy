@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- 6.9.1
+install:
+- npm install -g yarn
+- yarn
+script:
+- yarn run lint
+- yarn run build
+notifications:
+  slack:
+    secure: CGu/LP9iAkXyLZeHWWZqw3rucDU8NuNpEwSsD0OGmmFOi1Ea/JJwNMPAod03MYzPWoEk9PYDgYNdRRnw177e8ItSZUhYyh0mwZmAh9yCv4wL5MIu3KbU6jn4kA09R1B0vVzMrqpfi+8DSzgjkE1jBQQLsm4rQR3mNyZQJfnZ3f572td8a+6xkREmRPc3mad2mIBjGXv/LLE5EDdNdOjLR0OqBAsnAfGruIg2AlrTqp0d4bdjbvh6pDgi+/oHOLYyE9yZDgYyDgpzYNALjv5TS4Nb5XeOu6bmo3wpEaWTTMCEoMfWsmNk/q9D9mjdTmZkuJVvuUxgJVcq0JQVzfip3mTqRC8kXM58y5RfvTcszSb66bgR4D1GFUJq08LDvuOqlA8r96uhqHhOr52yt4U55JAu6b+WqhKmnwhlQcnE3fInzt+NhuJaazkW1B6/9Sp4q9S5F0kD/5DbczwQQN//uyhqqK/BQA5JSbM6tBcrRXQu2Xo/goo3TFLN8UY1e8icNXZ0i3CI9yoQQkt+X91R1qkEbFSFFbfDkaaHE6I/vNDycAx/VNHO91EDkwk9X0YgZ+kLFgWZko0lZsrfYe2wHrWIIBUUSrWWBqFuERU57KZd9LrfW0w1LqTN2jvrZKvroKJ4l2dwqvHVOznlMbcU1QFGgJD8Daqr6AUFcrnp8wg=

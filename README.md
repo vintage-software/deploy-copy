@@ -1,4 +1,5 @@
 # deploy-copy
+[![Build Status](https://api.travis-ci.org/vintage-software/deploy-copy.svg?branch=master)](https://travis-ci.org/vintage-software/deploy-copy)
 [![npm version](https://badge.fury.io/js/deploy-copy.svg)](https://badge.fury.io/js/deploy-copy)
 
 Config-based script to copy only files needed for production.
