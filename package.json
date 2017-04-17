@@ -7,10 +7,11 @@
     "deploy-copy": "dist/index.js"
   },
   "scripts": {
-    "lint": "tslint --project tsconfig.json --type-check",
     "clean": "rimraf dist",
+    "lint": "tslint --project tsconfig.json --type-check",
+    "prebuild": "yarn run clean && yarn run lint",
     "build": "tsc --project tsconfig.json",
-    "ide-build": "yarn run lint && yarn run build && echo successfully built"
+    "postbuild": "echo successfully built"
   },
   "dependencies": {
     "del": "2.2.2",
