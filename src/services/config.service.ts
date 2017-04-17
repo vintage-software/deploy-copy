@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export interface Config {
   cwd: string;
   exclude: string[];
+  installProdNodeModules?: string[];
 }
 
 @Injectable()

@@ -9,7 +9,7 @@ export class CopyService {
   constructor(private fs: FsService) {
   }
 
-  copyFiles(sourceFolder: string, destinationFolder: string, filePaths: string[]) {
+  copyFiles(sourceFolder: string, tempFolder: string, destinationFolder: string, filePaths: string[]) {
     console.log(`copying ${filePaths.length} files...`);
 
     let progressBar = new ProgressBar(
@@ -18,7 +18,15 @@ export class CopyService {
 
     let copyPromises = filePaths
       .map(filePath => {
-        let destinationPath = filePath.replace(sourceFolder, destinationFolder);
+        let destinationPath: string;
+
+        if (filePath.startsWith(tempFolder)) {
+          destinationPath = filePath.replace(tempFolder, destinationFolder);
+        } else if (filePath.startsWith(sourceFolder)) {
+          destinationPath = filePath.replace(sourceFolder, destinationFolder);
+        } else {
+          throw new Error(`cannot determine where to copy ${filePath}.`);
+        }
 
         return this.fs.copy(filePath, destinationPath)
           .then(() => progressBar.tick(), () => progressBar.tick());

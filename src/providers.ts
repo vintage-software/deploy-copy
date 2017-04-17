@@ -4,6 +4,8 @@ import { CopyService } from './services/copy.service';
 import { FsService } from './services/fs.service';
 import { MatchService } from './services/match.service';
 import { ProgramService } from './services/program.service';
+import { ShellService } from './services/shell.service';
+import { YarnService } from './services/yarn.service';
 
 export const providers = [
   ArgsService,
@@ -11,5 +13,7 @@ export const providers = [
   CopyService,
   FsService,
   MatchService,
-  ProgramService
+  ProgramService,
+  ShellService,
+  YarnService
 ];
