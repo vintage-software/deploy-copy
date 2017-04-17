@@ -1,110 +1,19 @@
 #! /usr/bin/env node
 
-/// <reference path="./types/globby.d.ts" />
+import 'reflect-metadata';
 
-'use strict';
+import { ReflectiveInjector } from '@angular/core';
 
-import * as fs from 'fs-extra';
-import * as globby from 'globby';
-import * as path from 'path';
-import * as ProgressBar from 'progress';
-import * as rimraf from 'rimraf';
-
-import { Args, Config } from './helpers';
+import { providers } from './providers';
+import { ProgramService } from './services/program.service';
 
 process.on('uncaughtException', handleError);
 process.on('unhandledRejection', handleError);
 
-const start = new Date();
+const injector = ReflectiveInjector.resolveAndCreate(providers);
+const program: ProgramService = injector.get(ProgramService);
 
-let processArgs = readArgs();
-
-let sourceFolder = processArgs.source ? path.resolve(processArgs.source) : process.cwd();
-let destinationFolder = path.join(path.dirname(sourceFolder), `${path.basename(sourceFolder)}-Deploy`);
-
-console.log(`copying from ${sourceFolder} to ${destinationFolder}...`);
-
-let commonConfig: Config = require('../common.deploy.json');
-let commonExclude = commonConfig.exclude.map(i => `!${i}`);
-
-console.log('cleaning...');
-rimraf.sync(destinationFolder);
-
-console.log('finding configs...');
-let configFilePaths = getConfigs(sourceFolder);
-
-console.log('matching paths...');
-let matchPromises = configFilePaths
-  .map(configFilePath => {
-    let configDir = path.dirname(configFilePath);
-
-    let config: Config = require(configFilePath);
-    let src = ['./**/*.*']
-      .concat(commonExclude)
-      .concat(config.exclude.map(path => path.startsWith('!') ? path.substring(1) : `!${path}`));
-
-    return globby(src, { cwd: configDir })
-      .then(paths => paths.map(path => path.replace('./', `${configDir}\\`)));
-  });
-
-Promise.all(matchPromises)
-  .then(results => {
-    let files: string[] = [].concat.apply([], results);
-    console.log(`copying ${files.length} files...`);
-    let progressBar = new ProgressBar(
-      '[:bar] :percent',
-      { total: files.length, width: (<any>process.stdout).columns - 10 });
-
-    let copyPromises = files
-      .map(file => {
-        let dest = file.replace(sourceFolder, destinationFolder);
-
-        return copy(file, dest)
-          .then(() => progressBar.tick(), () => progressBar.tick());
-      });
-
-    return Promise.all(copyPromises);
-  })
-  .then(() => {
-    let end = new Date();
-    let seconds = (end.getTime() - start.getTime()) / 1000;
-    console.log(`Completed in ${seconds} seconds...`);
-  });
-
-function readArgs(): Args {
-  let args: { [index: string]: string } = {};
-  for (let i = 2; i < process.argv.length; i++) {
-    let match = process.argv[i].match(/-([a-z]+):(.+)/);
-    args[match[1]] = match[2];
-  }
-  return args;
-}
-
-function getConfigs(dir: string, filelist: string[] = []): string[] {
-  let filePaths = fs.readdirSync(dir);
-  for (let filePath of filePaths) {
-    let absolutePath = path.join(dir, filePath);
-    if (fs.statSync(absolutePath).isDirectory() && !absolutePath.includes('node_modules')) {
-      filelist = getConfigs(absolutePath, filelist);
-    } else if (absolutePath.endsWith('deploy.json')) {
-      filelist = filelist.concat(absolutePath);
-    }
-  }
-
-  return filelist;
-}
-
-function copy(source: string, destination: string) {
-  return new Promise<void>((resolve, reject) => {
-    fs.copy(source, destination, error => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
+program.run();
 
 function handleError(error: any) {
   console.error(error instanceof Error ? error.stack : `Error: ${error.toString()}`);

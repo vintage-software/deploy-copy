@@ -14,11 +14,15 @@
     "postbuild": "echo successfully built"
   },
   "dependencies": {
+    "@angular/core": "^4.0.2",
     "del": "2.2.2",
     "fs-extra": "2.1.2",
     "globby": "6.1.0",
     "progress": "2.0.0",
-    "rimraf": "2.6.1"
+    "reflect-metadata": "^0.1.10",
+    "rimraf": "2.6.1",
+    "rxjs": "^5.3.0",
+    "zone.js": "^0.8.5"
   },
   "devDependencies": {
     "@types/fs-extra": "2.0.0",
