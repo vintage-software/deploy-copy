@@ -41,7 +41,7 @@ let matchPromises = configFilePaths
     let config: Config = require(configFilePath);
     let src = ['./**/*.*']
       .concat(commonExclude)
-      .concat(config.exclude.map(path => `!${path}`));
+      .concat(config.exclude.map(path => path.startsWith('!') ? path.substring(1) : `!${path}`));
 
     return globby(src, { cwd: configDir })
       .then(paths => paths.map(path => path.replace('./', `${configDir}\\`)));
