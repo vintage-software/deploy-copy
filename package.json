@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@angular/core": "^4.0.2",
-    "del": "2.2.2",
     "fs-extra": "2.1.2",
     "globby": "6.1.0",
     "progress": "2.0.0",
