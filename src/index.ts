@@ -47,27 +47,29 @@ let matchPromises = configFilePaths
       .then(paths => paths.map(path => path.replace('./', `${configDir}\\`)));
   });
 
-Promise.all(matchPromises).then(results => {
-  let files: string[] = [].concat.apply([], results);
-  console.log(`copying ${files.length} files...`);
-  let progressBar = new ProgressBar(
-    '[:bar] :percent',
-    { total: files.length, width: (<any>process.stdout).columns - 10 });
+Promise.all(matchPromises)
+  .then(results => {
+    let files: string[] = [].concat.apply([], results);
+    console.log(`copying ${files.length} files...`);
+    let progressBar = new ProgressBar(
+      '[:bar] :percent',
+      { total: files.length, width: (<any>process.stdout).columns - 10 });
 
-  let copyPromises = files
-    .map(file => {
-      let dest = file.replace(sourceFolder, destinationFolder);
+    let copyPromises = files
+      .map(file => {
+        let dest = file.replace(sourceFolder, destinationFolder);
 
-      return copy(file, dest)
-        .then(() => progressBar.tick(), () => progressBar.tick());
-    });
+        return copy(file, dest)
+          .then(() => progressBar.tick(), () => progressBar.tick());
+      });
 
-  return Promise.all(copyPromises);
-}).then(() => {
-  let end = new Date();
-  let seconds = (end.getTime() - start.getTime()) / 1000;
-  console.log(`Completed in ${seconds} seconds...`);
-});
+    return Promise.all(copyPromises);
+  })
+  .then(() => {
+    let end = new Date();
+    let seconds = (end.getTime() - start.getTime()) / 1000;
+    console.log(`Completed in ${seconds} seconds...`);
+  });
 
 function readArgs(): Args {
   let args: { [index: string]: string } = {};
