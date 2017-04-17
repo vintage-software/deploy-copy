@@ -34,38 +34,33 @@ console.log('finding configs...');
 let configFilePaths = getConfigs(sourceFolder);
 
 console.log('matching paths...');
-let matchPromises = [];
-for (let i = 0; i < configFilePaths.length; ++i) {
-  let configFilePath = configFilePaths[i];
-  let configDir = path.dirname(configFilePath);
+let matchPromises = configFilePaths
+  .map(configFilePath => {
+    let configDir = path.dirname(configFilePath);
 
-  let config: Config = require(configFilePath);
-  let src = ['./**/*.*']
-    .concat(commonExclude)
-    .concat(config.exclude.map(path => `!${path}`));
+    let config: Config = require(configFilePath);
+    let src = ['./**/*.*']
+      .concat(commonExclude)
+      .concat(config.exclude.map(path => `!${path}`));
 
-  let matchPromise = globby(src, { cwd: configDir })
-    .then(paths => paths.map(path => path.replace('./', `${configDir}\\`)));
-
-  matchPromises.push(matchPromise);
-}
+    return globby(src, { cwd: configDir })
+      .then(paths => paths.map(path => path.replace('./', `${configDir}\\`)));
+  });
 
 Promise.all(matchPromises).then(results => {
-  let files = [].concat.apply([], results);
+  let files: string[] = [].concat.apply([], results);
   console.log(`copying ${files.length} files...`);
   let progressBar = new ProgressBar(
     '[:bar] :percent',
     { total: files.length, width: (<any>process.stdout).columns - 10 });
-  let copyPromises = [];
-  for (let i = 0; i < files.length; ++i) {
-    let file = files[i];
-    let dest = file.replace(sourceFolder, destinationFolder);
 
-    let copyPromise = copy(file, dest)
-      .then(() => progressBar.tick(), () => progressBar.tick());
+  let copyPromises = files
+    .map(file => {
+      let dest = file.replace(sourceFolder, destinationFolder);
 
-    copyPromises.push(copyPromise);
-  }
+      return copy(file, dest)
+        .then(() => progressBar.tick(), () => progressBar.tick());
+    });
 
   return Promise.all(copyPromises);
 }).then(() => {
