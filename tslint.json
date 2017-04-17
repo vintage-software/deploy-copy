@@ -44,6 +44,8 @@
     ]
   },
   "rules": {
+    "align": [ false ],
+    "ban": [ false ],
     "class-name": true,
     "comment-format": [
       true,
@@ -64,11 +66,15 @@
     "member-access": false,
     "member-ordering": [
       true,
+      "public-before-private",
       "static-before-instance",
       "variables-before-functions"
     ],
+    "no-any": false,
     "no-arg": true,
     "no-bitwise": true,
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": true,
     "no-console": [
       true,
       "debug",
@@ -80,10 +86,11 @@
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
-    "no-empty": false,
+    "no-empty": true,
     "no-eval": true,
     "no-inferrable-types": true,
     "no-internal-module": true,
+    "no-parameter-properties": false,
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
@@ -98,6 +105,8 @@
       "check-open-brace",
       "check-catch",
       "check-else",
+      "check-finally",
+      "check-open-brace",
       "check-whitespace"
     ],
     "ordered-imports": [
@@ -116,10 +125,12 @@
       true,
       "always"
     ],
+    "switch-default": true,
     "triple-equals": [
       true,
       "allow-null-check"
     ],
+    "typedef": [ false ],
     "typedef-whitespace": [
       true,
       {
