@@ -12,6 +12,9 @@ import * as rimraf from 'rimraf';
 
 import { Args, Config } from './helpers';
 
+process.on('uncaughtException', handleError);
+process.on('unhandledRejection', handleError);
+
 const start = new Date();
 
 let processArgs = readArgs();
@@ -104,4 +107,9 @@ function copy(source: string, destination: string) {
       }
     });
   });
+}
+
+function handleError(error: any) {
+  console.error(error instanceof Error ? error.stack : `Error: ${error.toString()}`);
+  process.exit(1);
 }
