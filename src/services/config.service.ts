@@ -12,7 +12,7 @@ export interface Config {
 @Injectable()
 export class ConfigService {
   getCommonConfig(): Config {
-    return require('../../common.deploy.json');
+    return this.readConfigFile(require.resolve('../../common.deploy.json'));
   }
 
   getConfigs(dir: string): Config[] {
@@ -21,7 +21,7 @@ export class ConfigService {
     let filePaths = this.getConfigPaths(dir, []);
 
     return filePaths
-      .map(filePath => Object.assign(require(filePath), { cwd: path.dirname(filePath) }));
+      .map(filePath => this.readConfigFile(filePath));
   }
 
   private getConfigPaths(dir: string, filelist: string[] = []): string[] {
@@ -36,5 +36,11 @@ export class ConfigService {
     }
 
     return filelist;
+  }
+
+  private readConfigFile(filePath: string): Config {
+    let configJson = fs.readFileSync(filePath).toString();
+    let config = JSON.parse(configJson);
+    return Object.assign(config, { cwd: path.dirname(filePath) });
   }
 }
