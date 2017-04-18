@@ -20,6 +20,11 @@ export class ProgramService {
     private yarnService: YarnService
   ) {}
 
+  get version(): string {
+    let packageManifest = require('../../package.json');
+    return packageManifest.version;
+  }
+
   run() {
     const start = new Date();
 
@@ -29,6 +34,7 @@ export class ProgramService {
     let destinationFolder = path.join(path.dirname(sourceFolder), `${path.basename(sourceFolder)}-Deploy`);
     let tempFolder = `${destinationFolder}_TEMP`;
 
+    console.log(`deploy-copy v${this.version}:`);
     console.log(`copying from ${sourceFolder} to ${destinationFolder}...`);
 
     this.fs.clean(destinationFolder);
