@@ -1,6 +1,6 @@
 {
   "name": "deploy-copy",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Config-based script to copy only files needed for production.",
   "main": "dist/index.js",
   "bin": {
