@@ -12,18 +12,21 @@ export class YarnService {
   }
 
   installProdDependencies(configs: Config[], sourceFolder: string, tempFolder: string) {
-    console.log('installing production dependencies...');
-
-    let yarnPromises = configs
+    let projectPaths = configs
       .filter(config => !!config.installProdNodeModules)
-      .map(config => config.installProdNodeModules.map(projectPath => ({ config, path: projectPath})))
-      .reduce(projects => projects.reduce((previous, current) => previous.concat(current), []))
-      .map(project => {
-        let sourcePath = path.resolve(project.config.cwd, project.path);
-        let tempPath = sourcePath.replace(sourceFolder, tempFolder);
+      .map(config => config.installProdNodeModules.map(projectPath => path.resolve(config.cwd, projectPath)))
+      .reduce((previous, current) => previous.concat(current), []);
 
-        return this.fs.copy(sourcePath, tempPath, 'package.json')
-          .then(() => this.fs.copy(sourcePath, tempPath, 'yarn.lock'))
+    if (projectPaths.length) {
+      console.log('installing production dependencies...');
+    }
+
+    let yarnPromises = projectPaths
+      .map(projectPath => {
+        let tempPath = projectPath.replace(sourceFolder, tempFolder);
+
+        return this.fs.copy(projectPath, tempPath, 'package.json')
+          .then(() => this.fs.copy(projectPath, tempPath, 'yarn.lock'))
           .then(() => this.shell.execute('yarn --production --pure-lockfile', { cwd: tempPath }));
       });
 
