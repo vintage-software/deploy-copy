@@ -3,10 +3,17 @@ import * as path from 'path';
 
 import { Injectable } from '@angular/core';
 
+export interface TextReplacement {
+  path: string;
+  searchText: string;
+  replacementText: string;
+}
+
 export interface Config {
   cwd: string;
   exclude: string[];
   installProdNodeModules?: string[];
+  textReplacements?: TextReplacement[];
 }
 
 @Injectable()

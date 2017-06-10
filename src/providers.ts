@@ -5,6 +5,7 @@ import { FsService } from './services/fs.service';
 import { MatchService } from './services/match.service';
 import { ProgramService } from './services/program.service';
 import { ShellService } from './services/shell.service';
+import { TextReplacementService } from './services/text-replacement.service';
 import { YarnService } from './services/yarn.service';
 
 export const providers = [
@@ -15,5 +16,6 @@ export const providers = [
   MatchService,
   ProgramService,
   ShellService,
+  TextReplacementService,
   YarnService
 ];

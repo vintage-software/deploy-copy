@@ -7,6 +7,7 @@ import { ConfigService } from './config.service';
 import { CopyService } from './copy.service';
 import { FsService } from './fs.service';
 import { MatchService } from './match.service';
+import { TextReplacementService } from './text-replacement.service';
 import { YarnService } from './yarn.service';
 
 @Injectable()
@@ -17,6 +18,7 @@ export class ProgramService {
     private copyService: CopyService,
     private fs: FsService,
     private matchService: MatchService,
+    private textReplacementService: TextReplacementService,
     private yarnService: YarnService
   ) {}
 
@@ -46,6 +48,7 @@ export class ProgramService {
       .then(() => this.yarnService.installProdDependencies(configs, sourceFolder, tempFolder))
       .then(() => this.matchService.matchPaths(configs, sourceFolder, tempFolder))
       .then(filePaths => this.copyService.copyFiles(sourceFolder, tempFolder, destinationFolder, filePaths))
+      .then(() => this.textReplacementService.replaceText(configs, sourceFolder, destinationFolder))
       .then(() => { this.fs.clean(tempFolder); })
       .then(() => {
         let end = new Date();
