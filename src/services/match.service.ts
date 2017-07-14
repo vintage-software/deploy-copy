@@ -27,7 +27,7 @@ export class MatchService {
         const excludes = []
           .concat(commonExclude)
           .concat(config.exclude)
-          .map(path => path.startsWith('!') ? path.substring(1) : `!${path}`);
+          .map(filePath => filePath.startsWith('!') ? filePath.substring(1) : `!${filePath}`);
 
         const deps = (config.installProdNodeModules || [])
           .map(projectPath => nodeModuleCopyPaths.map(depGlob => path.join(config.cwd, projectPath, depGlob)))

@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class FsService {
-  clean(path: string) {
-    console.log(`cleaning ${path}...`);
-    return rimraf.sync(path);
+  clean(folderPath: string) {
+    console.log(`cleaning ${folderPath}...`);
+    return rimraf.sync(folderPath);
   }
 
   copy(source: string, destination: string, filename?: string): Promise<void> {
