@@ -16,22 +16,22 @@
     "postbuild": "echo successfully built"
   },
   "dependencies": {
-    "@angular/core": "^4.0.2",
-    "fs-extra": "2.1.2",
+    "@angular/core": "4.3.0",
+    "fs-extra": "4.0.0",
     "globby": "6.1.0",
     "progress": "2.0.0",
-    "reflect-metadata": "^0.1.10",
+    "reflect-metadata": "0.1.10",
     "rimraf": "2.6.1",
-    "rxjs": "^5.3.0",
-    "zone.js": "^0.8.5"
+    "rxjs": "5.4.2",
+    "zone.js": "0.8.13"
   },
   "devDependencies": {
-    "@types/fs-extra": "2.0.0",
-    "@types/node": "7.0.12",
-    "@types/progress": "1.1.28",
+    "@types/fs-extra": "3.0.3",
+    "@types/node": "8.0.13",
+    "@types/progress": "2.0.0",
     "@types/rimraf": "0.0.28",
-    "tslint": "5.1.0",
-    "typescript": "2.2.2"
+    "tslint": "5.5.0",
+    "typescript": "2.4.1"
   },
   "repository": {
     "type": "git",
