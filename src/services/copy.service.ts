@@ -1,6 +1,5 @@
-import * as ProgressBar from 'progress';
-
 import { Injectable } from '@angular/core';
+import * as ProgressBar from 'progress';
 
 import { FsService } from './fs.service';
 

@@ -1,6 +1,5 @@
-import * as path from 'path';
-
 import { Injectable } from '@angular/core';
+import * as path from 'path';
 
 import { ArgsService } from './args.service';
 import { ConfigService } from './config.service';

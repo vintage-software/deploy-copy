@@ -1,7 +1,6 @@
+import { Injectable } from '@angular/core';
 import * as fs from 'fs';
 import * as path from 'path';
-
-import { Injectable } from '@angular/core';
 
 export interface TextReplacement {
   path: string;

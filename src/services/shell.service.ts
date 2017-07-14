@@ -1,6 +1,5 @@
-import { exec, ExecOptions } from 'child_process';
-
 import { Injectable } from '@angular/core';
+import { exec, ExecOptions } from 'child_process';
 
 export interface ExecResult {
   cwd: string;

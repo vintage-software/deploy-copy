@@ -1,8 +1,7 @@
+import { Injectable } from '@angular/core';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as rimraf from 'rimraf';
-
-import { Injectable } from '@angular/core';
 
 @Injectable()
 export class FsService {

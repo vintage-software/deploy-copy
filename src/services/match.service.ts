@@ -1,9 +1,8 @@
 /// <reference path="../types/globby.d.ts" />
 
+import { Injectable } from '@angular/core';
 import * as globby from 'globby';
 import * as path from 'path';
-
-import { Injectable } from '@angular/core';
 
 import { Config, ConfigService } from './config.service';
 
