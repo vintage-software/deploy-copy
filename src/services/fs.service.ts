@@ -11,8 +11,6 @@ export class FsService {
     return rimraf.sync(path);
   }
 
-  copy(source: string, destination: string): Promise<void>;
-  copy(source: string, destination: string, filename: string): Promise<void>;
   copy(source: string, destination: string, filename?: string): Promise<void> {
     if (filename) {
       source = path.join(source, filename);

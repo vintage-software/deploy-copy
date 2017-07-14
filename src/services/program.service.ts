@@ -23,18 +23,18 @@ export class ProgramService {
   ) {}
 
   get version(): string {
-    let packageManifest = require('../../package.json');
+    const packageManifest = require('../../package.json');
     return packageManifest.version;
   }
 
   run() {
     const start = new Date();
 
-    let processArgs = this.argsService.readArgs();
+    const processArgs = this.argsService.readArgs();
 
-    let sourceFolder = processArgs.source ? path.resolve(processArgs.source) : process.cwd();
-    let destinationFolder = path.join(path.dirname(sourceFolder), `${path.basename(sourceFolder)}-Deploy`);
-    let tempFolder = `${destinationFolder}_TEMP`;
+    const sourceFolder = processArgs.source ? path.resolve(processArgs.source) : process.cwd();
+    const destinationFolder = path.join(path.dirname(sourceFolder), `${path.basename(sourceFolder)}-Deploy`);
+    const tempFolder = `${destinationFolder}_TEMP`;
 
     console.log(`deploy-copy v${this.version}:`);
     console.log(`copying from ${sourceFolder} to ${destinationFolder}...`);
@@ -42,7 +42,7 @@ export class ProgramService {
     this.fs.clean(destinationFolder);
     this.fs.clean(tempFolder);
 
-    let configs = this.configService.getConfigs(sourceFolder);
+    const configs = this.configService.getConfigs(sourceFolder);
 
     Promise.resolve()
       .then(() => this.yarnService.installProdDependencies(configs, sourceFolder, tempFolder))
@@ -51,8 +51,8 @@ export class ProgramService {
       .then(() => this.textReplacementService.replaceText(configs, sourceFolder, destinationFolder))
       .then(() => { this.fs.clean(tempFolder); })
       .then(() => {
-        let end = new Date();
-        let seconds = (end.getTime() - start.getTime()) / 1000;
+        const end = new Date();
+        const seconds = (end.getTime() - start.getTime()) / 1000;
         console.log(`Completed in ${seconds} seconds...`);
       });
   }

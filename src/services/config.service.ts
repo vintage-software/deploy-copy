@@ -25,16 +25,16 @@ export class ConfigService {
   getConfigs(dir: string): Config[] {
     console.log('finding configs...');
 
-    let filePaths = this.getConfigPaths(dir, []);
+    const filePaths = this.getConfigPaths(dir, []);
 
     return filePaths
       .map(filePath => this.readConfigFile(filePath));
   }
 
   private getConfigPaths(dir: string, filelist: string[] = []): string[] {
-    let filePaths = fs.readdirSync(dir);
-    for (let filePath of filePaths) {
-      let absolutePath = path.join(dir, filePath);
+    const filePaths = fs.readdirSync(dir);
+    for (const filePath of filePaths) {
+      const absolutePath = path.join(dir, filePath);
       if (fs.statSync(absolutePath).isDirectory() && !absolutePath.includes('node_modules')) {
         filelist = this.getConfigPaths(absolutePath, filelist);
       } else if (absolutePath.endsWith('deploy.json')) {
@@ -46,8 +46,8 @@ export class ConfigService {
   }
 
   private readConfigFile(filePath: string): Config {
-    let configJson = fs.readFileSync(filePath).toString();
-    let config = JSON.parse(configJson);
+    const configJson = fs.readFileSync(filePath).toString();
+    const config = JSON.parse(configJson);
     return Object.assign(config, { cwd: path.dirname(filePath) });
   }
 }

@@ -22,19 +22,19 @@ export class MatchService {
 
     const commonExclude = this.configService.getCommonConfig().exclude;
 
-    let matchPromises = configs
+    const matchPromises = configs
       .map(config => {
-        let excludes = []
+        const excludes = []
           .concat(commonExclude)
           .concat(config.exclude)
           .map(path => path.startsWith('!') ? path.substring(1) : `!${path}`);
 
-        let deps = (config.installProdNodeModules || [])
+        const deps = (config.installProdNodeModules || [])
           .map(projectPath => nodeModuleCopyPaths.map(depGlob => path.join(config.cwd, projectPath, depGlob)))
           .reduce((previous, current) => previous.concat(current), [])
           .map(depGlob => depGlob.replace(sourceFolder, tempFolder));
 
-        let src = ['./**/*.*']
+        const src = ['./**/*.*']
           .concat(excludes);
 
         return this.matchGlobPaths(src, config.cwd)

@@ -12,11 +12,11 @@ export class CopyService {
   copyFiles(sourceFolder: string, tempFolder: string, destinationFolder: string, filePaths: string[]) {
     console.log(`copying ${filePaths.length} files...`);
 
-    let progressBar = new ProgressBar(
+    const progressBar = new ProgressBar(
       '[:bar] :percent',
       { total: filePaths.length, width: (<any>process.stdout).columns - 10 });
 
-    let copyPromises = filePaths
+    const copyPromises = filePaths
       .map(filePath => {
         let destinationPath: string;
 

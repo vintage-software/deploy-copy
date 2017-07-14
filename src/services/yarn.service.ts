@@ -12,7 +12,7 @@ export class YarnService {
   }
 
   installProdDependencies(configs: Config[], sourceFolder: string, tempFolder: string) {
-    let projectPaths = configs
+    const projectPaths = configs
       .filter(config => !!config.installProdNodeModules)
       .map(config => config.installProdNodeModules.map(projectPath => path.resolve(config.cwd, projectPath)))
       .reduce((previous, current) => previous.concat(current), []);
@@ -21,9 +21,9 @@ export class YarnService {
       console.log('installing production dependencies...');
     }
 
-    let yarnPromises = projectPaths
+    const yarnPromises = projectPaths
       .map(projectPath => {
-        let tempPath = projectPath.replace(sourceFolder, tempFolder);
+        const tempPath = projectPath.replace(sourceFolder, tempFolder);
 
         return this.fs.copy(projectPath, tempPath, 'package.json')
           .then(() => this.fs.copy(projectPath, tempPath, 'yarn.lock'))
