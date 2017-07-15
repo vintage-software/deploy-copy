@@ -6,6 +6,7 @@ import { ProgramService } from './services/program.service';
 import { ShellService } from './services/shell.service';
 import { TextReplacementService } from './services/text-replacement.service';
 import { YarnService } from './services/yarn.service';
+import { ZipService } from './services/zip.service';
 
 export const providers = [
   ConfigService,
@@ -15,5 +16,6 @@ export const providers = [
   ProgramService,
   ShellService,
   TextReplacementService,
-  YarnService
+  YarnService,
+  ZipService
 ];

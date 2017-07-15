@@ -12,7 +12,7 @@ export interface ExecResult {
 @Injectable()
 export class ShellService {
   execute(command: string, options?: ExecOptions): Promise<ExecResult> {
-    const cwd = options.cwd || process.cwd();
+    const cwd = options && options.cwd || process.cwd();
 
     return new Promise<ExecResult>((resolve, reject) => {
       exec(command, options, (error, stdout, stderr) => {
