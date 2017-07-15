@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import * as program from 'commander';
 import * as path from 'path';
 
-import { ArgsService } from './args.service';
 import { ConfigService } from './config.service';
 import { CopyService } from './copy.service';
 import { FsService } from './fs.service';
@@ -12,7 +12,6 @@ import { YarnService } from './yarn.service';
 @Injectable()
 export class ProgramService {
   constructor(
-    private argsService: ArgsService,
     private configService: ConfigService,
     private copyService: CopyService,
     private fs: FsService,
@@ -21,21 +20,28 @@ export class ProgramService {
     private yarnService: YarnService
   ) {}
 
-  get version(): string {
+  static get version(): string {
     const packageManifest = require('../../package.json');
     return packageManifest.version;
   }
 
   run() {
+    program
+      .version(ProgramService.version)
+      .option('--cwd [cwd]', 'Change the current working directory for the process.')
+      .parse(process.argv);
+
+    const args = {
+      cwd: program['cwd'] as string
+    };
+
     const start = new Date();
 
-    const processArgs = this.argsService.readArgs();
-
-    const sourceFolder = processArgs.source ? path.resolve(processArgs.source) : process.cwd();
+    const sourceFolder = args.cwd ? path.resolve(args.cwd) : process.cwd();
     const destinationFolder = path.join(path.dirname(sourceFolder), `${path.basename(sourceFolder)}-Deploy`);
     const tempFolder = `${destinationFolder}_TEMP`;
 
-    console.log(`deploy-copy v${this.version}:`);
+    console.log(`deploy-copy v${ProgramService.version}:`);
     console.log(`copying from ${sourceFolder} to ${destinationFolder}...`);
 
     this.fs.clean(destinationFolder);

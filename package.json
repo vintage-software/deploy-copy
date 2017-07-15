@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@angular/core": "4.3.0",
+    "commander": "2.11.0",
     "fs-extra": "4.0.0",
     "globby": "6.1.0",
     "progress": "2.0.0",
@@ -26,6 +27,7 @@
     "zone.js": "0.8.13"
   },
   "devDependencies": {
+    "@types/commander": "2.9.1",
     "@types/fs-extra": "3.0.3",
     "@types/node": "8.0.13",
     "@types/progress": "2.0.0",
