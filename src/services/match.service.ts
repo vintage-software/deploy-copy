@@ -8,6 +8,7 @@ import { Config, ConfigService } from './config.service';
 
 const nodeModuleCopyPaths = [
   'node_modules/**/*.js',
+  'node_modules/**/*.js.gz',
   'node_modules/**/*.json'
 ];
 
